@@ -2,6 +2,7 @@ import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { getSession } from '@/lib/auth-client';
 import {
   Header,
+  VideoSection,
   ProductCategories,
   ColorSelector,
   ActionButtons,
@@ -42,6 +43,7 @@ function Index() {
     <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
+        <VideoSection />
         <ProductCategories
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}

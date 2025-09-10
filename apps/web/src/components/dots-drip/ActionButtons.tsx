@@ -1,6 +1,12 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload, Palette, ChevronRight } from 'lucide-react';
+import { Upload, ChevronRight } from 'lucide-react';
+
+const designOptions = [
+  { name: 'Design 1', imageUrl: 'https://placehold.co/100x100/png?text=Design+1' },
+  { name: 'Design 2', imageUrl: 'https://placehold.co/100x100/png?text=Design+2' },
+  { name: 'Design 3', imageUrl: 'https://placehold.co/100x100/png?text=Design+3' },
+];
 
 export function ActionButtons() {
   return (
@@ -13,19 +19,13 @@ export function ActionButtons() {
         </Button>
 
         {/* Center Area: Design Buttons */}
-        <div className="flex justify-center gap-2">
-          <Button variant="outline">
-            <Palette className="mr-2 h-4 w-4" />
-            Design
-          </Button>
-          <Button variant="outline">
-            <Palette className="mr-2 h-4 w-4" />
-            Design
-          </Button>
-          <Button variant="outline">
-            <Palette className="mr-2 h-4 w-4" />
-            Design
-          </Button>
+        <div className="flex justify-center gap-4">
+          {designOptions.map((option) => (
+            <Button key={option.name} variant="outline" className="flex flex-col h-24 w-24 p-2">
+              <img src={option.imageUrl} alt={option.name} className="w-12 h-12 object-cover mb-1 rounded-sm" />
+              <span className="text-xs">{option.name}</span>
+            </Button>
+          ))}
         </div>
 
         {/* Right Side: Expandable Design Button */}
