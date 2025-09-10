@@ -1,0 +1,3 @@
+$ turbo run dev
+/usr/bin/bash: line 1: turbo: command not found
+error: script "dev" exited with code 127
