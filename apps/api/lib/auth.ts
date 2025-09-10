@@ -1,14 +1,21 @@
-import { env } from '@your-org/config';
-import { account, session, user, verification } from '@your-org/database/schema';
-import { betterAuth } from 'better-auth';
-import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { db } from '../db';
-import { generateEmailHTML } from '../utils/email-component';
-import { resend } from './email';
+import { env } from "@your-org/config";
+import {
+  account,
+  session,
+  user,
+  verification,
+} from "@your-org/database/schema";
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "../db";
+import { generateEmailHTML } from "../utils/email-component";
+import { resend } from "./email";
+
+const isDev = process.env.NODE_ENV === "development";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: 'pg',
+    provider: "pg",
     schema: {
       user,
       session,
@@ -20,28 +27,28 @@ export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: true,
+    requireEmailVerification: !isDev,
     sendResetPassword: async ({ user, url, token }) => {
-      console.log('URL:', url);
-      if (token) console.log('Token:', token);
-      console.log('user', user.email);
+      console.log("URL:", url);
+      if (token) console.log("Token:", token);
+      console.log("user", user.email);
 
       const html = generateEmailHTML({
         link: url,
-        type: 'password-reset',
+        type: "password-reset",
         userName: user.name,
       });
 
       await resend.emails.send({
-        from: 'noreply@your-domain.com',
+        from: "noreply@your-domain.com",
         to: user.email,
-        subject: 'Reset your password',
+        subject: "Reset your password",
         html: html,
         text: `Hello ${user.name}, We received a request to reset your password. Please visit this link to reset your password: ${url}`,
       });
     },
   },
-  trustedOrigins: ['http://localhost:5173'],
+  trustedOrigins: ["http://localhost:5173"],
   session: {
     cookieCache: {
       enabled: true,
@@ -49,19 +56,19 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
-    sendOnSignUp: true,
+    sendOnSignUp: !isDev,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url }) => {
       const html = generateEmailHTML({
         link: url,
-        type: 'email-verification',
+        type: "email-verification",
         userName: user.name,
       });
 
       await resend.emails.send({
-        from: 'noreply@your-domain.com',
+        from: "noreply@your-domain.com",
         to: user.email,
-        subject: 'Verify your email',
+        subject: "Verify your email",
         html: html,
         text: `Hello ${user.name}, Please verify your email address by visiting this link: ${url}`,
       });
