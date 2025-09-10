@@ -16,29 +16,28 @@ interface ProductCategoriesProps {
 export function ProductCategories({ selectedCategory, onCategoryChange }: ProductCategoriesProps) {
   return (
     <section className="py-8">
+      <h2 className="text-center text-2xl font-bold mb-4">Select Apparel</h2>
       <div className="flex justify-center flex-wrap gap-6">
         {categories.map((category) => (
-          <button
+          <div
             key={category.name}
-            className={`relative rounded-lg overflow-hidden transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 ${
-              selectedCategory === category.name ? 'ring-2 ring-slate-900 shadow-lg' : 'ring-1 ring-gray-200'
-            }`}
             onClick={() => onCategoryChange(category.name)}
+            className={`cursor-pointer p-2 rounded-lg ${
+              selectedCategory === category.name ? 'bg-slate-200' : 'bg-white'
+            }`}
           >
             <img
               src={category.imageUrl}
               alt={category.label}
-              className="w-40 h-40 object-cover"
+              className="w-40 h-40 object-cover rounded-md"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end justify-center">
-              <p className="text-white font-semibold text-lg pb-2">{category.label}</p>
-            </div>
+            <p className="text-center mt-2 font-semibold">{category.label}</p>
             {selectedCategory === category.name && (
-              <div className="absolute top-2 right-2 bg-slate-900 text-white text-xs px-2 py-1 rounded-full">
+              <p className="text-center text-sm text-slate-900 font-bold">
                 Current Select
-              </div>
+              </p>
             )}
-          </button>
+          </div>
         ))}
       </div>
     </section>

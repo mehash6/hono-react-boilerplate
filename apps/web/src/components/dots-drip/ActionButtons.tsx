@@ -11,6 +11,7 @@ const designOptions = [
 export function ActionButtons() {
   return (
     <section className="py-8">
+      <h2 className="text-center text-2xl font-bold mb-4">Select Design</h2>
       <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
         {/* Left Side: Upload Button */}
         <Button variant="outline" className="w-full md:w-auto">
@@ -21,16 +22,16 @@ export function ActionButtons() {
         {/* Center Area: Design Buttons */}
         <div className="flex justify-center gap-4">
           {designOptions.map((option) => (
-            <Button key={option.name} variant="outline" className="flex flex-col h-24 w-24 p-2">
-              <img src={option.imageUrl} alt={option.name} className="w-12 h-12 object-cover mb-1 rounded-sm" />
-              <span className="text-xs">{option.name}</span>
-            </Button>
+            <div key={option.name} className="p-2 border rounded-lg">
+              <img src={option.imageUrl} alt={option.name} className="w-16 h-16 object-cover rounded-md" />
+              <p className="text-center text-sm mt-1">{option.name}</p>
+            </div>
           ))}
         </div>
 
         {/* Right Side: Expandable Design Button */}
         <Button variant="outline" className="w-full md:w-auto">
-          Design
+          More Designs
           <ChevronRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
